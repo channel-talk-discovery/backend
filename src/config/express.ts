@@ -13,7 +13,11 @@ const exp = () => {
     .use(json())
     .use(urlencoded({ extended: true }))
     .use(compression())
-    .use(cors())
+    .use(cors({
+      origin: "*",
+      credentials: true,
+      optionsSuccessStatus: 200,
+    }))
     .use(methodOverride())
   app.options('*', cors())
 
