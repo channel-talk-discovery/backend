@@ -21,7 +21,13 @@ const exp = () => {
     .use(methodOverride())
   app.options('*', cors())
 
-  app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
+  app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads'), {
+    setHeaders: function setHeaders(res, path, stat) {
+      res.header('Access-Control-Allow-Origin', '*');
+      res.header('Access-Control-Allow-Methods', 'GET');
+      res.header('Access-Control-Allow-Headers', 'Content-Type');
+    }
+  }));
 
   app.use(router);
   app.use(errorHandler);
