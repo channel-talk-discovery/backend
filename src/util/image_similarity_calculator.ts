@@ -4,20 +4,21 @@ import { Range, Ranking, Weight, testUrl } from '@/common/constant';
 import deepai from 'deepai';
 import { infoDto } from '@/dto/placeInfoDto';
 import { getPlaceInfo } from '@/service/placeService';
+import apiDataResponse from '@/common/apiDataResponse';
 
 deepai.setApiKey(process.env.DEEPAI_API_KEY);
 
 async function calculateImageSimilarity(
   placeId: number,
   uploadImageUrl: string
-): Promise<calculateImageSimilarityResultDto> {
+): Promise<apiDataResponse<calculateImageSimilarityResultDto>> {
 
   const placeInfo: infoDto = await getPlaceInfo(placeId);
-  const { placeImageUrl, point } = placeInfo;
+  const { imageUrl, point } = placeInfo;
   let final_point = 0;
 
   const resp = await deepai.callStandardApi('image-similarity', {
-    image1: placeImageUrl,
+    image1: imageUrl,
     image2: uploadImageUrl,
   });
 
@@ -31,7 +32,9 @@ async function calculateImageSimilarity(
     // ....
   }
   const response: calculateImageSimilarityResultDto = { success, result, final_point };
-  return response;
+  return {
+    data: response
+  };
 }
 
 async function checkRanking(similarity: number, pointWeight: number, success: boolean): Promise<calculateRankingDto> {
