@@ -5,11 +5,11 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Auth } from "./Auth";
+import Auth from "@/entities/Auth";
 
 @Index("Place_placeId_uindex", ["placeId"], { unique: true })
 @Entity("Place", { schema: "channeltalk" })
-export class Place {
+class Place {
   @PrimaryGeneratedColumn({ type: "int", name: "placeId" })
   placeId: number;
 
@@ -28,3 +28,6 @@ export class Place {
   @OneToMany(() => Auth, (auth) => auth.place)
   auths: Auth[];
 }
+
+
+export default Place;

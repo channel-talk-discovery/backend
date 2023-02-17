@@ -6,14 +6,14 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Place } from "./Place";
-import { User } from "./User";
+import Place from "@/entities/Place";
+import User from "@/entities/User";
 
 @Index("Auth_authId_uindex", ["authId"], { unique: true })
 @Index("Auth_Place_placeId_fk", ["placeId"], {})
 @Index("Auth_User_userId_fk", ["userId"], {})
 @Entity("Auth", { schema: "channeltalk" })
-export class Auth {
+class Auth {
   @PrimaryGeneratedColumn({ type: "int", name: "authId" })
   authId: number;
 
@@ -37,3 +37,6 @@ export class Auth {
   @JoinColumn([{ name: "userId", referencedColumnName: "userId" }])
   user: User;
 }
+
+
+export default Auth;
