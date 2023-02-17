@@ -4,6 +4,7 @@ import { Range, Ranking, Weight, testUrl } from '@/common/constant';
 import deepai from 'deepai';
 import { infoDto } from '@/dto/placeInfoDto';
 import { getPlaceInfo } from '@/service/placeService';
+import { savePoint } from '@/service/userService';
 import apiDataResponse from '@/common/apiDataResponse';
 
 deepai.setApiKey(process.env.DEEPAI_API_KEY);
@@ -28,8 +29,8 @@ async function calculateImageSimilarity(
   if (success) {
     // Ranking에 따라 적립될 포인트
     final_point = Math.round(point * pointWeight);
-    // to-do: 1번 사용자에게 포인트 적립
-    // ....
+    // 1번 사용자에게 포인트 적립
+    await savePoint(placeId, final_point);
   }
   const response: calculateImageSimilarityResultDto = { success, result, final_point };
   return {
