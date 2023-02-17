@@ -2,24 +2,24 @@ import { calculateRankingDto } from '@/dto/calculateRankingDto';
 import { calculateImageSimilarityResultDto } from '@/dto/calculateImageSimilarityResultDto';
 import { Range, Ranking, Weight, testUrl } from '@/common/constant';
 import deepai from 'deepai';
+import { infoDto } from '@/dto/placeInfoDto';
+import { getPlaceInfo } from '@/service/placeService';
 
 deepai.setApiKey(process.env.DEEPAI_API_KEY);
 
-async function calculateImageSimilarity(placeId: string, uploadImageUrl: string): Promise<calculateImageSimilarityResultDto> {
+async function calculateImageSimilarity(
+  placeId: number,
+  uploadImageUrl: string
+): Promise<calculateImageSimilarityResultDto> {
 
-  // to-do : placeId로 가져오기
-  // 임시 data
-  const placeImageUrl: string = testUrl;
-  const point: number = 1;
-
+  const placeInfo: infoDto = await getPlaceInfo(placeId);
+  const { placeImageUrl, point } = placeInfo;
   let final_point = 0;
 
   const resp = await deepai.callStandardApi('image-similarity', {
     image1: placeImageUrl,
     image2: uploadImageUrl,
   });
-
-  console.log(resp.output.distance);
 
   const calculationResult: calculateRankingDto = await checkRanking(resp.output.distance, 1.0, true);
   const { pointWeight, success, result } = calculationResult;
