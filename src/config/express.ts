@@ -4,6 +4,7 @@ import cors from 'cors';
 import methodOverride from 'method-override';
 import router from '@/routes/index';
 import errorHandler from '@/middleware/errorHandler';
+import path from 'path';
 
 const exp = () => {
   const app = express();
@@ -14,7 +15,8 @@ const exp = () => {
     .use(compression())
     .use(cors())
     .use(methodOverride())
-    .use(express.static('public'));
+
+  app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 
   app.use(router);
   app.use(errorHandler);

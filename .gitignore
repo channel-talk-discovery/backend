@@ -4,3 +4,4 @@ logs/
 dist/
 *.log
 yarn.lock
+src/uploads/*
