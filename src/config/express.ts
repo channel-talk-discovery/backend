@@ -13,8 +13,8 @@ const exp = () => {
     .use(json())
     .use(urlencoded({ extended: true }))
     .use(compression())
-    .use(cors())
     .use(methodOverride())
+  app.options('*', cors())
 
   app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 
