@@ -2,6 +2,6 @@ import express from 'express';
 import * as place from '@/controller/placeController';
 
 const router = express.Router();
-router.get('/', place.getPlaces);
+router.get('/', place.getPlaceList);
 
 export default router;

@@ -1,16 +1,15 @@
-
 import { NextFunction, Request, Response } from 'express';
+import { getPlaces } from '@/service/placeService';
 
-export const getPlaces = async (
+export const getPlaceList = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
   try {
-    // todo - service 연결
-    const response = { "hi": 1 };
+    const response = await getPlaces();
 
-    res.send(response);
+    res.send({ data: response });
   } catch (err) {
     next(err);
   }

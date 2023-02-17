@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import placeRouter from '@/routes/place';
 import deepAIRouter from '@/routes/deepAI';
+import userRouter from '@/routes/user';
 
 const router = Router();
 
@@ -15,5 +16,6 @@ router.get('/', (req, res) => {
 
 router.use('/place', placeRouter);
 router.use('/deepAI', deepAIRouter);
+router.use('/user', userRouter);
 
 export default router;
