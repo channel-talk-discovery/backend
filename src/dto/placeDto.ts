@@ -4,4 +4,5 @@ export interface placeDto {
   mainAddressHint: string;
   subAddressHint: string;
   point: number;
+  uuid: string;
 }

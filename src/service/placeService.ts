@@ -27,7 +27,7 @@ export const getPlaceInfo = async function (placeId: number): Promise<infoDto> {
 export const getPlaces = async function (): Promise<placeDto> {
   try {
     const query: string =
-      'select placeId, imageUrl, mainAddressHint, subAddressHint, point from Place P where placeId not in (select placeId from Auth where userId = ?);';
+      'select placeId, imageUrl, mainAddressHint, subAddressHint, point, uuid from Place P where placeId not in (select placeId from Auth where userId = ?);';
     return db
       .execute(query, [1]) // 회원가입 미구현으로 인해 1번 유저로 고정
       .then((result: any) => result[0]);
