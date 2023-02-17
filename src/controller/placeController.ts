@@ -7,7 +7,8 @@ export const getPlaceList = async (
   next: NextFunction,
 ) => {
   try {
-    const response = await getPlaces();
+    const category = req.query.category;
+    const response = await getPlaces(category);
 
     res.send({ data: response });
   } catch (err) {
